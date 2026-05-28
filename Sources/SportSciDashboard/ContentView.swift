@@ -47,8 +47,8 @@ struct ContentView: View {
             }
         } detail: {
             if let selectedId = selectedAthleteId,
-               let athlete = squad.athletes.first(where: { $0.id == selectedId }) {
-                AthleteDetailView(athlete: athlete)
+               let index = squad.athletes.firstIndex(where: { $0.id == selectedId }) {
+                AthleteDetailView(athlete: $squad.athletes[index])
             } else {
                 Text("Select an athlete")
                     .font(.largeTitle)

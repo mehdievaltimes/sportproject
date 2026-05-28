@@ -28,8 +28,7 @@ class STATSportsParser {
                         date: date,
                         totalDistance: distance,
                         highSpeedDistance: highSpeed,
-                        maxSpeed: maxSpeed,
-                        restingHR: nil, hrv: nil, sleepDuration: nil, rpe: nil, wellnessScore: nil
+                        maxSpeed: maxSpeed
                     )
                     
                     squad.athletes[athleteIndex].dailyLoads.append(newLoad)

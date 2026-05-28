@@ -6,6 +6,13 @@ struct Squad: Identifiable, Hashable {
     var athletes: [Athlete]
 }
 
+struct AthleteNote: Identifiable, Hashable {
+    let id: UUID
+    let date: Date
+    let author: String
+    var content: String
+}
+
 struct Athlete: Identifiable, Hashable {
     let id: UUID
     var name: String
@@ -13,6 +20,7 @@ struct Athlete: Identifiable, Hashable {
     var isTrackingCycle: Bool
     var currentCyclePhase: CyclePhase?
     var dailyLoads: [DailyLoad]
+    var notes: [AthleteNote]
     
     // Helper to calculate acute load (e.g. 7-day rolling sum/average)
     var acuteLoad: Double {
