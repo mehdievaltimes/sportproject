@@ -17,7 +17,7 @@ struct LoginView: View {
                     .padding()
                     .background(Circle().fill(Color.blue.opacity(0.1)))
                 
-                Text("SportSci OS")
+                Text("SomeoneGiveThisaName")
                     .font(.system(size: 32, weight: .bold))
                 
                 Text("Elite Roster Management & Recovery")

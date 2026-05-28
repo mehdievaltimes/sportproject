@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9109EA5B2FC80F2900A15E0C /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9109EA5A2FC80F2900A15E0C /* LoginView.swift */; };
+		9109EA5D2FC80F6A00A15E0C /* UpdateStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9109EA5C2FC80F6A00A15E0C /* UpdateStatusView.swift */; };
 		91B2E12C2FC8086B00A8E199 /* DailyLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B2E11D2FC8086B00A8E199 /* DailyLoad.swift */; };
 		91B2E12D2FC8086B00A8E199 /* RecoveryEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B2E1212FC8086B00A8E199 /* RecoveryEngine.swift */; };
 		91B2E12E2FC8086B00A8E199 /* AddAthleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B2E1252FC8086B00A8E199 /* AddAthleteView.swift */; };
@@ -23,6 +25,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9109EA5A2FC80F2900A15E0C /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		9109EA5C2FC80F6A00A15E0C /* UpdateStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateStatusView.swift; sourceTree = "<group>"; };
 		91B2E10B2FC8072C00A8E199 /* sportproject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sportproject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		91B2E11B2FC8086B00A8E199 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		91B2E11C2FC8086B00A8E199 /* Athlete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Athlete.swift; sourceTree = "<group>"; };
@@ -106,6 +110,8 @@
 				91B2E1282FC8086B00A8E199 /* LoadChart.swift */,
 				91B2E1292FC8086B00A8E199 /* LogDataView.swift */,
 				91B2E12A2FC8086B00A8E199 /* NotesSection.swift */,
+				9109EA5A2FC80F2900A15E0C /* LoginView.swift */,
+				9109EA5C2FC80F6A00A15E0C /* UpdateStatusView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -189,10 +195,12 @@
 				91B2E1312FC8086B00A8E199 /* STATSportsParser.swift in Sources */,
 				91B2E1322FC8086B00A8E199 /* AthleteDetailView.swift in Sources */,
 				91B2E1332FC8086B00A8E199 /* LoadChart.swift in Sources */,
+				9109EA5B2FC80F2900A15E0C /* LoginView.swift in Sources */,
 				91B2E1342FC8086B00A8E199 /* LogDataView.swift in Sources */,
 				91B2E1352FC8086B00A8E199 /* NotesSection.swift in Sources */,
 				91B2E1362FC8086B00A8E199 /* SportSciDashboard.swift in Sources */,
 				91B2E1372FC8086B00A8E199 /* ContentView.swift in Sources */,
+				9109EA5D2FC80F6A00A15E0C /* UpdateStatusView.swift in Sources */,
 				91B2E1382FC8086B00A8E199 /* Athlete.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
