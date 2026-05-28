@@ -74,8 +74,3 @@ Network Trash Folder
 Temporary Items
 .apdisk
 *.plist
-*.plist
-*.resolved
-*.pbxproj
-*.entitlements
-*.plist

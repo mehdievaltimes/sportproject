@@ -9,6 +9,17 @@
 /* Begin PBXBuildFile section */
 		9109EA5B2FC80F2900A15E0C /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9109EA5A2FC80F2900A15E0C /* LoginView.swift */; };
 		9109EA5D2FC80F6A00A15E0C /* UpdateStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9109EA5C2FC80F6A00A15E0C /* UpdateStatusView.swift */; };
+		9109EA622FC8146A00A15E0C /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 9109EA612FC8146A00A15E0C /* FirebaseAnalytics */; };
+		9109EA642FC8146A00A15E0C /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 9109EA632FC8146A00A15E0C /* FirebaseAuth */; };
+		9109EA662FC8146A00A15E0C /* FirebaseAuthCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 9109EA652FC8146A00A15E0C /* FirebaseAuthCombine-Community */; };
+		9109EA682FC8146A00A15E0C /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 9109EA672FC8146A00A15E0C /* FirebaseCore */; };
+		9109EA6A2FC8146A00A15E0C /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 9109EA692FC8146A00A15E0C /* FirebaseDatabase */; };
+		9109EA6C2FC8146A00A15E0C /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 9109EA6B2FC8146A00A15E0C /* FirebaseFirestore */; };
+		9109EA6E2FC8146A00A15E0C /* FirebaseFirestoreCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 9109EA6D2FC8146A00A15E0C /* FirebaseFirestoreCombine-Community */; };
+		9109EA702FC8146A00A15E0C /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 9109EA6F2FC8146A00A15E0C /* FirebaseStorage */; };
+		9109EA722FC8146A00A15E0C /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 9109EA712FC8146A00A15E0C /* FirebaseStorageCombine-Community */; };
+		9109EA742FC821BD00A15E0C /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9109EA732FC821BD00A15E0C /* UserManager.swift */; };
+		9109EA782FC82F4D00A15E0C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9109EA772FC82F4D00A15E0C /* GoogleService-Info.plist */; };
 		91B2E12C2FC8086B00A8E199 /* DailyLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B2E11D2FC8086B00A8E199 /* DailyLoad.swift */; };
 		91B2E12D2FC8086B00A8E199 /* RecoveryEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B2E1212FC8086B00A8E199 /* RecoveryEngine.swift */; };
 		91B2E12E2FC8086B00A8E199 /* AddAthleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B2E1252FC8086B00A8E199 /* AddAthleteView.swift */; };
@@ -19,7 +30,7 @@
 		91B2E1332FC8086B00A8E199 /* LoadChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B2E1282FC8086B00A8E199 /* LoadChart.swift */; };
 		91B2E1342FC8086B00A8E199 /* LogDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B2E1292FC8086B00A8E199 /* LogDataView.swift */; };
 		91B2E1352FC8086B00A8E199 /* NotesSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B2E12A2FC8086B00A8E199 /* NotesSection.swift */; };
-		91B2E1362FC8086B00A8E199 /* SportSciDashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B2E1242FC8086B00A8E199 /* SportSciDashboard.swift */; };
+		91B2E1362FC8086B00A8E199 /* Sportsapp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B2E1242FC8086B00A8E199 /* Sportsapp.swift */; };
 		91B2E1372FC8086B00A8E199 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B2E11B2FC8086B00A8E199 /* ContentView.swift */; };
 		91B2E1382FC8086B00A8E199 /* Athlete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B2E11C2FC8086B00A8E199 /* Athlete.swift */; };
 /* End PBXBuildFile section */
@@ -27,14 +38,17 @@
 /* Begin PBXFileReference section */
 		9109EA5A2FC80F2900A15E0C /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		9109EA5C2FC80F6A00A15E0C /* UpdateStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateStatusView.swift; sourceTree = "<group>"; };
-		91B2E10B2FC8072C00A8E199 /* sportproject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sportproject.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9109EA732FC821BD00A15E0C /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		9109EA752FC8255100A15E0C /* sportproject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sportproject.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9109EA762FC82B3500A15E0C /* sportproject.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = sportproject.entitlements; sourceTree = "<group>"; };
+		9109EA772FC82F4D00A15E0C /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		91B2E11B2FC8086B00A8E199 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		91B2E11C2FC8086B00A8E199 /* Athlete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Athlete.swift; sourceTree = "<group>"; };
 		91B2E11D2FC8086B00A8E199 /* DailyLoad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyLoad.swift; sourceTree = "<group>"; };
 		91B2E11F2FC8086B00A8E199 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
 		91B2E1212FC8086B00A8E199 /* RecoveryEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryEngine.swift; sourceTree = "<group>"; };
 		91B2E1222FC8086B00A8E199 /* STATSportsParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STATSportsParser.swift; sourceTree = "<group>"; };
-		91B2E1242FC8086B00A8E199 /* SportSciDashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportSciDashboard.swift; sourceTree = "<group>"; };
+		91B2E1242FC8086B00A8E199 /* Sportsapp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sportsapp.swift; sourceTree = "<group>"; };
 		91B2E1252FC8086B00A8E199 /* AddAthleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAthleteView.swift; sourceTree = "<group>"; };
 		91B2E1262FC8086B00A8E199 /* AlertPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPanel.swift; sourceTree = "<group>"; };
 		91B2E1272FC8086B00A8E199 /* AthleteDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AthleteDetailView.swift; sourceTree = "<group>"; };
@@ -48,6 +62,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9109EA6A2FC8146A00A15E0C /* FirebaseDatabase in Frameworks */,
+				9109EA622FC8146A00A15E0C /* FirebaseAnalytics in Frameworks */,
+				9109EA662FC8146A00A15E0C /* FirebaseAuthCombine-Community in Frameworks */,
+				9109EA682FC8146A00A15E0C /* FirebaseCore in Frameworks */,
+				9109EA642FC8146A00A15E0C /* FirebaseAuth in Frameworks */,
+				9109EA702FC8146A00A15E0C /* FirebaseStorage in Frameworks */,
+				9109EA6C2FC8146A00A15E0C /* FirebaseFirestore in Frameworks */,
+				9109EA722FC8146A00A15E0C /* FirebaseStorageCombine-Community in Frameworks */,
+				9109EA6E2FC8146A00A15E0C /* FirebaseFirestoreCombine-Community in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -57,22 +80,16 @@
 		91B2E1022FC8072C00A8E199 = {
 			isa = PBXGroup;
 			children = (
+				9109EA762FC82B3500A15E0C /* sportproject.entitlements */,
 				91B2E11B2FC8086B00A8E199 /* ContentView.swift */,
 				91B2E11E2FC8086B00A8E199 /* Models */,
 				91B2E1202FC8086B00A8E199 /* Preview Content */,
 				91B2E1232FC8086B00A8E199 /* Services */,
-				91B2E1242FC8086B00A8E199 /* SportSciDashboard.swift */,
+				91B2E1242FC8086B00A8E199 /* Sportsapp.swift */,
 				91B2E12B2FC8086B00A8E199 /* Views */,
-				91B2E10C2FC8072C00A8E199 /* Products */,
+				9109EA772FC82F4D00A15E0C /* GoogleService-Info.plist */,
+				9109EA752FC8255100A15E0C /* sportproject.app */,
 			);
-			sourceTree = "<group>";
-		};
-		91B2E10C2FC8072C00A8E199 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				91B2E10B2FC8072C00A8E199 /* sportproject.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		91B2E11E2FC8086B00A8E199 /* Models */ = {
@@ -97,6 +114,7 @@
 			children = (
 				91B2E1212FC8086B00A8E199 /* RecoveryEngine.swift */,
 				91B2E1222FC8086B00A8E199 /* STATSportsParser.swift */,
+				9109EA732FC821BD00A15E0C /* UserManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -133,9 +151,18 @@
 			);
 			name = sportproject;
 			packageProductDependencies = (
+				9109EA612FC8146A00A15E0C /* FirebaseAnalytics */,
+				9109EA632FC8146A00A15E0C /* FirebaseAuth */,
+				9109EA652FC8146A00A15E0C /* FirebaseAuthCombine-Community */,
+				9109EA672FC8146A00A15E0C /* FirebaseCore */,
+				9109EA692FC8146A00A15E0C /* FirebaseDatabase */,
+				9109EA6B2FC8146A00A15E0C /* FirebaseFirestore */,
+				9109EA6D2FC8146A00A15E0C /* FirebaseFirestoreCombine-Community */,
+				9109EA6F2FC8146A00A15E0C /* FirebaseStorage */,
+				9109EA712FC8146A00A15E0C /* FirebaseStorageCombine-Community */,
 			);
 			productName = testapp;
-			productReference = 91B2E10B2FC8072C00A8E199 /* sportproject.app */;
+			productReference = 9109EA752FC8255100A15E0C /* sportproject.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -162,8 +189,11 @@
 			);
 			mainGroup = 91B2E1022FC8072C00A8E199;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				9109EA602FC8146A00A15E0C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 91B2E10C2FC8072C00A8E199 /* Products */;
+			productRefGroup = 91B2E1022FC8072C00A8E199;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -177,6 +207,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9109EA782FC82F4D00A15E0C /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -193,12 +224,13 @@
 				91B2E12F2FC8086B00A8E199 /* MockData.swift in Sources */,
 				91B2E1302FC8086B00A8E199 /* AlertPanel.swift in Sources */,
 				91B2E1312FC8086B00A8E199 /* STATSportsParser.swift in Sources */,
+				9109EA742FC821BD00A15E0C /* UserManager.swift in Sources */,
 				91B2E1322FC8086B00A8E199 /* AthleteDetailView.swift in Sources */,
 				91B2E1332FC8086B00A8E199 /* LoadChart.swift in Sources */,
 				9109EA5B2FC80F2900A15E0C /* LoginView.swift in Sources */,
 				91B2E1342FC8086B00A8E199 /* LogDataView.swift in Sources */,
 				91B2E1352FC8086B00A8E199 /* NotesSection.swift in Sources */,
-				91B2E1362FC8086B00A8E199 /* SportSciDashboard.swift in Sources */,
+				91B2E1362FC8086B00A8E199 /* Sportsapp.swift in Sources */,
 				91B2E1372FC8086B00A8E199 /* ContentView.swift in Sources */,
 				9109EA5D2FC80F6A00A15E0C /* UpdateStatusView.swift in Sources */,
 				91B2E1382FC8086B00A8E199 /* Athlete.swift in Sources */,
@@ -333,13 +365,24 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = sportproject.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 85T6M47345;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = sportproject;
@@ -366,13 +409,24 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = sportproject.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 85T6M47345;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = sportproject;
@@ -416,6 +470,65 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9109EA602FC8146A00A15E0C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.14.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9109EA612FC8146A00A15E0C /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9109EA602FC8146A00A15E0C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		9109EA632FC8146A00A15E0C /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9109EA602FC8146A00A15E0C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		9109EA652FC8146A00A15E0C /* FirebaseAuthCombine-Community */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9109EA602FC8146A00A15E0C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseAuthCombine-Community";
+		};
+		9109EA672FC8146A00A15E0C /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9109EA602FC8146A00A15E0C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		9109EA692FC8146A00A15E0C /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9109EA602FC8146A00A15E0C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+		9109EA6B2FC8146A00A15E0C /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9109EA602FC8146A00A15E0C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		9109EA6D2FC8146A00A15E0C /* FirebaseFirestoreCombine-Community */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9109EA602FC8146A00A15E0C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseFirestoreCombine-Community";
+		};
+		9109EA6F2FC8146A00A15E0C /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9109EA602FC8146A00A15E0C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+		9109EA712FC8146A00A15E0C /* FirebaseStorageCombine-Community */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9109EA602FC8146A00A15E0C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseStorageCombine-Community";
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 91B2E1032FC8072C00A8E199 /* Project object */;
 }
