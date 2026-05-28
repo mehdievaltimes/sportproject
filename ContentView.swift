@@ -1,4 +1,5 @@
 import SwiftUI
+internal import UniformTypeIdentifiers
 
 struct ContentView: View {
     @State private var selectedAthleteId: UUID?

@@ -49,7 +49,6 @@ struct LogDataView: View {
                     }
                     
                     TextField("Resting Heart Rate (bpm)", text: $restingHR)
-                        .keyboardType(.numberPad)
                 }
                 
                 if athlete.isTrackingCycle {
