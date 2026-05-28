@@ -6,6 +6,7 @@ struct ContentView: View {
     // Using @State so it can be updated by the parser
     @State private var squad = MockData.shared.squads[0]
     @State private var isImporting = false
+    @State private var isAddingAthlete = false
     
     var body: some View {
         NavigationSplitView {
@@ -18,10 +19,18 @@ struct ContentView: View {
             .listStyle(.sidebar)
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
-                    Button(action: {
-                        isImporting = true
-                    }) {
-                        Label("Import CSV", systemImage: "square.and.arrow.down")
+                    HStack {
+                        Button(action: {
+                            isAddingAthlete = true
+                        }) {
+                            Label("Add Athlete", systemImage: "person.badge.plus")
+                        }
+                        
+                        Button(action: {
+                            isImporting = true
+                        }) {
+                            Label("Import CSV", systemImage: "square.and.arrow.down")
+                        }
                     }
                     .fileImporter(
                         isPresented: $isImporting,
@@ -44,6 +53,9 @@ struct ContentView: View {
                         }
                     }
                 }
+            }
+            .sheet(isPresented: $isAddingAthlete) {
+                AddAthleteView(squad: $squad)
             }
         } detail: {
             if let selectedId = selectedAthleteId,

@@ -2,6 +2,7 @@ import SwiftUI
 
 struct AthleteDetailView: View {
     @Binding var athlete: Athlete
+    @State private var isLoggingData = false
     
     var body: some View {
         ScrollView {
@@ -112,6 +113,16 @@ struct AthleteDetailView: View {
             .padding(30)
         }
         .navigationTitle(athlete.name)
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Button(action: { isLoggingData = true }) {
+                    Label("Log Data", systemImage: "plus.circle.fill")
+                }
+            }
+        }
+        .sheet(isPresented: $isLoggingData) {
+            LogDataView(athlete: $athlete)
+        }
     }
 }
 
