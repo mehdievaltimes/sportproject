@@ -3,6 +3,7 @@ import SwiftUI
 struct AthleteDetailView: View {
     @Binding var athlete: Athlete
     @State private var isLoggingData = false
+    @State private var isUpdatingStatus = false
     
     var body: some View {
         ScrollView {
@@ -12,9 +13,30 @@ struct AthleteDetailView: View {
                     VStack(alignment: .leading) {
                         Text(athlete.name)
                             .font(.system(size: 36, weight: .bold))
-                        Text(athlete.position)
-                            .font(.title3)
-                            .foregroundColor(.secondary)
+                        
+                        HStack(alignment: .center, spacing: 10) {
+                            Text(athlete.position)
+                                .font(.title3)
+                                .foregroundColor(.secondary)
+                            
+                            // Medical Status Banner
+                            if athlete.status != .available {
+                                Text(athlete.status.rawValue.uppercased())
+                                    .font(.caption)
+                                    .fontWeight(.bold)
+                                    .padding(.horizontal, 10)
+                                    .padding(.vertical, 4)
+                                    .background(athlete.status == .injured ? Color.red.opacity(0.2) : Color.yellow.opacity(0.2))
+                                    .foregroundColor(athlete.status == .injured ? .red : .orange)
+                                    .clipShape(Capsule())
+                            }
+                            
+                            Button(action: { isUpdatingStatus = true }) {
+                                Image(systemName: "pencil.circle.fill")
+                                    .foregroundColor(.secondary)
+                            }
+                            .buttonStyle(.plain)
+                        }
                     }
                     Spacer()
                     
@@ -85,6 +107,47 @@ struct AthleteDetailView: View {
                     }
                 }
                 
+                // Medical & Rehab Panel
+                if !athlete.injuries.isEmpty {
+                    Divider().padding(.vertical)
+                    
+                    Text("Medical & Rehab")
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                    
+                    VStack(spacing: 12) {
+                        ForEach(athlete.injuries) { injury in
+                            HStack {
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(injury.bodyPart)
+                                        .font(.headline)
+                                    Text("Status: \(injury.clearanceStatus ?? "Evaluating")")
+                                        .font(.subheadline)
+                                        .foregroundColor(.secondary)
+                                }
+                                Spacer()
+                                VStack(alignment: .trailing, spacing: 4) {
+                                    if let returnDate = injury.expectedReturnDate {
+                                        Text("Exp. Return")
+                                            .font(.caption)
+                                            .foregroundColor(.secondary)
+                                        Text(returnDate, style: .date)
+                                            .font(.subheadline)
+                                            .fontWeight(.medium)
+                                    }
+                                }
+                            }
+                            .padding()
+                            .background(Color(nsColor: .controlBackgroundColor))
+                            .cornerRadius(8)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color.red.opacity(0.3), lineWidth: 1)
+                            )
+                        }
+                    }
+                }
+                
                 Divider()
                     .padding(.vertical)
                 
@@ -93,10 +156,6 @@ struct AthleteDetailView: View {
                     .padding(.bottom, 20)
                 
                 // Load Chart
-                Text("7-Day Load & Cycle Phase")
-                    .font(.title2)
-                    .fontWeight(.semibold)
-                
                 LoadChart(athlete: athlete)
                     .frame(height: 300)
                     .padding()
@@ -122,6 +181,9 @@ struct AthleteDetailView: View {
         }
         .sheet(isPresented: $isLoggingData) {
             LogDataView(athlete: $athlete)
+        }
+        .sheet(isPresented: $isUpdatingStatus) {
+            UpdateStatusView(athlete: $athlete)
         }
     }
 }

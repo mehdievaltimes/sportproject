@@ -13,6 +13,21 @@ struct AthleteNote: Identifiable, Hashable {
     var content: String
 }
 
+enum AthleteStatus: String, Codable, Hashable, CaseIterable {
+    case available = "Available"
+    case modifiedTraining = "Modified Training"
+    case rehab = "Rehab"
+    case injured = "Injured"
+}
+
+struct InjuryEvent: Identifiable, Hashable {
+    let id: UUID
+    let date: Date
+    let bodyPart: String
+    var expectedReturnDate: Date?
+    var clearanceStatus: String?
+}
+
 struct Athlete: Identifiable, Hashable {
     let id: UUID
     var name: String
@@ -21,6 +36,10 @@ struct Athlete: Identifiable, Hashable {
     var currentCyclePhase: CyclePhase?
     var dailyLoads: [DailyLoad]
     var notes: [AthleteNote]
+    
+    // Medical Tracking
+    var status: AthleteStatus = .available
+    var injuries: [InjuryEvent] = []
     
     // Helper to calculate acute load (e.g. 7-day rolling sum/average)
     var acuteLoad: Double {

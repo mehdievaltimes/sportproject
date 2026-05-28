@@ -10,7 +10,7 @@ struct MockData {
         
         let generateLoads = { () -> [DailyLoad] in
             var loads: [DailyLoad] = []
-            for i in 0..<14 {
+            for i in 0..<60 {
                 let date = Calendar.current.date(byAdding: .day, value: -i, to: today)!
                 let totalSleep = Double.random(in: 6...9)
                 let deep = totalSleep * 0.20
@@ -48,9 +48,13 @@ struct MockData {
         ]
         
         let athletes = [
-            Athlete(id: UUID(), name: "Sarah Jenkins", position: "Midfielder", isTrackingCycle: true, currentCyclePhase: .luteal, dailyLoads: generateLoads(), notes: sampleNotes),
-            Athlete(id: UUID(), name: "Megan Rapinoe", position: "Forward", isTrackingCycle: true, currentCyclePhase: .follicular, dailyLoads: generateLoads(), notes: []),
-            Athlete(id: UUID(), name: "Alex Morgan", position: "Striker", isTrackingCycle: true, currentCyclePhase: .ovulatory, dailyLoads: generateLoads(), notes: [])
+            Athlete(id: UUID(), name: "Sarah Jenkins", position: "Midfielder", isTrackingCycle: true, currentCyclePhase: .luteal, dailyLoads: generateLoads(), notes: sampleNotes, status: .available, injuries: []),
+            Athlete(id: UUID(), name: "Megan Rapinoe", position: "Forward", isTrackingCycle: true, currentCyclePhase: .follicular, dailyLoads: generateLoads(), notes: [], status: .injured, injuries: [
+                InjuryEvent(id: UUID(), date: today.addingTimeInterval(-86400 * 5), bodyPart: "Right Knee (MCL Sprain)", expectedReturnDate: today.addingTimeInterval(86400 * 21), clearanceStatus: "Pending MRI")
+            ]),
+            Athlete(id: UUID(), name: "Alex Morgan", position: "Striker", isTrackingCycle: true, currentCyclePhase: .ovulatory, dailyLoads: generateLoads(), notes: [], status: .modifiedTraining, injuries: [
+                InjuryEvent(id: UUID(), date: today.addingTimeInterval(-86400 * 2), bodyPart: "Left Hamstring tightness", expectedReturnDate: today.addingTimeInterval(86400 * 3), clearanceStatus: "Daily check with physio")
+            ])
         ]
         
         self.squads = [
