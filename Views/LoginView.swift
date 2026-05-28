@@ -1,11 +1,18 @@
 import SwiftUI
+import FirebaseAuth
 
 struct LoginView: View {
     @Binding var isAuthenticated: Bool
+    @AppStorage("loggedInEmail") private var loggedInEmail = ""
+    @AppStorage("loggedInName") private var loggedInName = ""
     
     @State private var email = ""
     @State private var password = ""
+    @State private var firstName = ""
+    @State private var lastName = ""
     @State private var isAuthenticating = false
+    @State private var isSignUp = false
+    @State private var errorMessage = ""
     
     var body: some View {
         VStack(spacing: 30) {
@@ -28,6 +35,18 @@ struct LoginView: View {
             
             // Login Form
             VStack(spacing: 16) {
+                if isSignUp {
+                    HStack {
+                        TextField("First Name", text: $firstName)
+                            .textFieldStyle(.roundedBorder)
+                            .controlSize(.large)
+                        
+                        TextField("Last Name", text: $lastName)
+                            .textFieldStyle(.roundedBorder)
+                            .controlSize(.large)
+                    }
+                }
+                
                 TextField("Work Email", text: $email)
                     .textFieldStyle(.roundedBorder)
                     .controlSize(.large)
@@ -36,23 +55,42 @@ struct LoginView: View {
                     .textFieldStyle(.roundedBorder)
                     .controlSize(.large)
                 
-                Button(action: login) {
+                if !errorMessage.isEmpty {
+                    Text(errorMessage)
+                        .foregroundColor(.red)
+                        .font(.caption)
+                        .multilineTextAlignment(.center)
+                }
+                
+                Button(action: handleAuth) {
                     if isAuthenticating {
                         ProgressView()
                             .controlSize(.small)
                             .frame(maxWidth: .infinity)
                     } else {
-                        Text("Sign In")
+                        Text(isSignUp ? "Create Account" : "Sign In")
                             .fontWeight(.semibold)
                             .frame(maxWidth: .infinity)
                     }
                 }
                 .buttonStyle(.borderedProminent)
                 .controlSize(.large)
-                .disabled(email.isEmpty || password.isEmpty || isAuthenticating)
+                .disabled(email.isEmpty || password.isEmpty || isAuthenticating || (isSignUp && (firstName.isEmpty || lastName.isEmpty)))
                 .padding(.top, 10)
+                
+                Button(action: {
+                    withAnimation {
+                        isSignUp.toggle()
+                        errorMessage = ""
+                    }
+                }) {
+                    Text(isSignUp ? "Already have an account? Sign In" : "Need an account? Sign Up")
+                        .foregroundColor(.blue)
+                        .font(.subheadline)
+                }
+                .buttonStyle(.plain)
             }
-            .frame(width: 320)
+            .frame(width: 360)
             .padding(40)
             .background(Color(nsColor: .windowBackgroundColor))
             .cornerRadius(16)
@@ -69,12 +107,60 @@ struct LoginView: View {
         )
     }
     
-    private func login() {
+    private func handleAuth() {
         isAuthenticating = true
-        // Simulate network delay for a real feel
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            withAnimation(.spring()) {
-                isAuthenticated = true
+        errorMessage = ""
+        
+        if isSignUp {
+            Auth.auth().createUser(withEmail: email, password: password) { result, error in
+                if let error = error {
+                    self.errorMessage = error.localizedDescription
+                    self.isAuthenticating = false
+                    return
+                }
+                
+                guard let uid = result?.user.uid else { return }
+                
+                UserManager.shared.createUserProfile(uid: uid, firstName: firstName, lastName: lastName, email: email, role: "Sports Scientist") { error in
+                    DispatchQueue.main.async {
+                        self.isAuthenticating = false
+                        if let error = error {
+                            self.errorMessage = "Failed to save profile: \(error.localizedDescription)"
+                        } else {
+                            self.loggedInEmail = self.email
+                            self.loggedInName = "\(self.firstName) \(self.lastName)"
+                            withAnimation(.spring()) {
+                                self.isAuthenticated = true
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            Auth.auth().signIn(withEmail: email, password: password) { result, error in
+                if let error = error {
+                    self.errorMessage = error.localizedDescription
+                    self.isAuthenticating = false
+                    return
+                }
+                
+                guard let uid = result?.user.uid else { return }
+                
+                UserManager.shared.fetchCurrentUserProfile(uid: uid) { fetchResult in
+                    DispatchQueue.main.async {
+                        self.isAuthenticating = false
+                        switch fetchResult {
+                        case .success(let profile):
+                            self.loggedInEmail = profile.email
+                            self.loggedInName = profile.fullName
+                            withAnimation(.spring()) {
+                                self.isAuthenticated = true
+                            }
+                        case .failure(let error):
+                            self.errorMessage = "Failed to load profile: \(error.localizedDescription)"
+                        }
+                    }
+                }
             }
         }
     }

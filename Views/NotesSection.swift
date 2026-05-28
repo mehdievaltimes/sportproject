@@ -2,6 +2,8 @@ import SwiftUI
 
 struct NotesSection: View {
     @Binding var athlete: Athlete
+    @AppStorage("loggedInEmail") private var loggedInEmail = ""
+    @AppStorage("loggedInName") private var loggedInName = ""
     @State private var newNoteContent: String = ""
     
     var body: some View {
@@ -64,10 +66,12 @@ struct NotesSection: View {
         let content = newNoteContent.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !content.isEmpty else { return }
         
+        let authorName = !loggedInName.isEmpty ? loggedInName : (!loggedInEmail.isEmpty ? loggedInEmail : "Unknown User")
+        
         let newNote = AthleteNote(
             id: UUID(),
             date: Date(),
-            author: "Current User", // In a real app, this comes from Auth
+            author: authorName,
             content: content
         )
         

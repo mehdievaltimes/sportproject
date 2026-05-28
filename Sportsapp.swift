@@ -1,7 +1,13 @@
 import SwiftUI
+import FirebaseCore
+
+
 @main
-struct SportSciDashboard: App {
+struct Sportsapp: App {
     @AppStorage("isAuthenticated") private var isAuthenticated = false
+    init() {
+            FirebaseApp.configure()
+        }
     
     var body: some Scene {
         WindowGroup {
