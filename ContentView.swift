@@ -8,8 +8,10 @@ struct StaffDashboardView: View {
     @AppStorage("loggedInTeamDomain") private var loggedInTeamDomain = ""
     
     var teamDisplayName: String {
+        guard !loggedInTeamDomain.isEmpty else { return "Unknown Team" }
         let parts = loggedInTeamDomain.components(separatedBy: ".")
-        return parts.first?.capitalized ?? "Unknown Team"
+        let name = parts.first?.capitalized ?? "Unknown Team"
+        return name.isEmpty ? "Unknown Team" : name
     }
     
     // Group athletes by their primary position category
@@ -56,6 +58,16 @@ struct StaffDashboardView: View {
         
         NavigationStack {
             ScrollView {
+                if !am.lastErrorMessage.isEmpty {
+                    Text(am.lastErrorMessage)
+                        .padding()
+                        .background(Color.red.opacity(0.1))
+                        .foregroundColor(.red)
+                        .cornerRadius(8)
+                        .padding(.horizontal, 30)
+                        .padding(.top, 20)
+                }
+                
                 VStack(alignment: .leading, spacing: 30) {
                     // Main Header since the window title bar is hidden
                     HStack {
@@ -162,6 +174,7 @@ struct StaffDashboardView: View {
             }
             .frame(minWidth: 1000, minHeight: 700)
             .onAppear {
+                NotificationManager.shared.requestPermission()
                 if !loggedInTeamDomain.isEmpty {
                     athleteManager.fetchTeamRoster(teamDomain: loggedInTeamDomain)
                 }

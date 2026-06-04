@@ -26,6 +26,7 @@
 		911EED4C2FD20E8B0038348A /* CapacityGaugeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911EED4B2FD20E8B0038348A /* CapacityGaugeView.swift */; };
 		911EED4E2FD20EB80038348A /* AnalyticsEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911EED4D2FD20EB80038348A /* AnalyticsEngine.swift */; };
 		911EED502FD21C820038348A /* AthleteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911EED4F2FD21C820038348A /* AthleteManager.swift */; };
+		911EED522FD230960038348A /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911EED512FD230960038348A /* NotificationManager.swift */; };
 		91B2E12C2FC8086B00A8E199 /* DailyLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B2E11D2FC8086B00A8E199 /* DailyLoad.swift */; };
 		91B2E12D2FC8086B00A8E199 /* RecoveryEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B2E1212FC8086B00A8E199 /* RecoveryEngine.swift */; };
 		91B2E12E2FC8086B00A8E199 /* AddAthleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B2E1252FC8086B00A8E199 /* AddAthleteView.swift */; };
@@ -55,6 +56,7 @@
 		911EED4B2FD20E8B0038348A /* CapacityGaugeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapacityGaugeView.swift; sourceTree = "<group>"; };
 		911EED4D2FD20EB80038348A /* AnalyticsEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsEngine.swift; sourceTree = "<group>"; };
 		911EED4F2FD21C820038348A /* AthleteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AthleteManager.swift; sourceTree = "<group>"; };
+		911EED512FD230960038348A /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		91B2E11B2FC8086B00A8E199 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		91B2E11C2FC8086B00A8E199 /* Athlete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Athlete.swift; sourceTree = "<group>"; };
 		91B2E11D2FC8086B00A8E199 /* DailyLoad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyLoad.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 			children = (
 				91B2E1212FC8086B00A8E199 /* RecoveryEngine.swift */,
 				911EED4F2FD21C820038348A /* AthleteManager.swift */,
+				911EED512FD230960038348A /* NotificationManager.swift */,
 				91B2E1222FC8086B00A8E199 /* STATSportsParser.swift */,
 				911EED4D2FD20EB80038348A /* AnalyticsEngine.swift */,
 				911EED472FD148D90038348A /* HealthDataService.swift */,
@@ -245,6 +248,7 @@
 				91B2E12E2FC8086B00A8E199 /* AddAthleteView.swift in Sources */,
 				91B2E12F2FC8086B00A8E199 /* MockData.swift in Sources */,
 				91B2E1302FC8086B00A8E199 /* AlertPanel.swift in Sources */,
+				911EED522FD230960038348A /* NotificationManager.swift in Sources */,
 				911EED4E2FD20EB80038348A /* AnalyticsEngine.swift in Sources */,
 				91B2E1312FC8086B00A8E199 /* STATSportsParser.swift in Sources */,
 				911EED4C2FD20E8B0038348A /* CapacityGaugeView.swift in Sources */,
