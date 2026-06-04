@@ -55,7 +55,7 @@ struct UpdateStatusView: View {
         
         if (selectedStatus == .injured || selectedStatus == .rehab) && !bodyPart.isEmpty {
             let newInjury = InjuryEvent(
-                id: UUID(),
+                id: UUID().uuidString,
                 date: Date(),
                 bodyPart: bodyPart,
                 expectedReturnDate: expectedReturnDate,

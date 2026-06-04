@@ -25,13 +25,9 @@ struct HistoricalMetricView: View {
         let maxVal = maxValue
         let minVal = minValue
         
-        if title == "Readiness Score" {
-            return 0...12
-        } else {
-            let paddedMax = maxVal == 0 ? 10.0 : maxVal * 1.15
-            let paddedMin = min(0, minVal)
-            return paddedMin...paddedMax
-        }
+        let paddedMax = maxVal == 0 ? 10.0 : maxVal * 1.15
+        let paddedMin = min(0, minVal)
+        return paddedMin...paddedMax
     }
     
     var body: some View {

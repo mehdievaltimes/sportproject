@@ -69,7 +69,7 @@ struct NotesSection: View {
         let authorName = !loggedInName.isEmpty ? loggedInName : (!loggedInEmail.isEmpty ? loggedInEmail : "Unknown User")
         
         let newNote = AthleteNote(
-            id: UUID(),
+            id: UUID().uuidString,
             date: Date(),
             author: authorName,
             content: content

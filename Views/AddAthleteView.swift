@@ -2,7 +2,8 @@ import SwiftUI
 
 struct AddAthleteView: View {
     @Environment(\.dismiss) var dismiss
-    @Binding var squad: Squad
+    @AppStorage("loggedInTeamDomain") private var loggedInTeamDomain = ""
+    @State private var athleteManager = AthleteManager.shared
     
     @State private var name: String = ""
     @State private var position: String = ""
@@ -43,7 +44,8 @@ struct AddAthleteView: View {
     
     private func saveAthlete() {
         let newAthlete = Athlete(
-            id: UUID(),
+            id: UUID().uuidString,
+            teamDomain: loggedInTeamDomain,
             name: name.trimmingCharacters(in: .whitespacesAndNewlines),
             positions: position.components(separatedBy: ",").map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }.filter { !$0.isEmpty },
             isTrackingCycle: isTrackingCycle,
@@ -53,9 +55,11 @@ struct AddAthleteView: View {
             gpsSessions: [],
             healthMetrics: [],
             cycleLogs: [],
-            notes: []
+            notes: [],
+            status: .available,
+            injuries: []
         )
-        squad.athletes.append(newAthlete)
+        athleteManager.saveAthlete(newAthlete)
         dismiss()
     }
 }
