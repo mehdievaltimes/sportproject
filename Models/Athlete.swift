@@ -31,20 +31,29 @@ struct InjuryEvent: Identifiable, Hashable {
 struct Athlete: Identifiable, Hashable {
     let id: UUID
     var name: String
-    var position: String
+    var positions: [String]
     var isTrackingCycle: Bool
     var currentCyclePhase: CyclePhase?
-    var dailyLoads: [DailyLoad]
+    
+    // Vitals
+    var height: Double? // cm
+    var weight: Double? // kg
+    
+    // Decoupled Data Streams
+    var gpsSessions: [GPSSession] = []
+    var healthMetrics: [HealthMetric] = []
+    var cycleLogs: [CycleLog] = []
+    
     var notes: [AthleteNote]
     
     // Medical Tracking
     var status: AthleteStatus = .available
     var injuries: [InjuryEvent] = []
     
-    // Helper to calculate acute load (e.g. 7-day rolling sum/average)
+    // Helper to calculate acute load (7-day rolling sum of GPS Player Load)
     var acuteLoad: Double {
         let sevenDaysAgo = Calendar.current.date(byAdding: .day, value: -7, to: Date()) ?? Date()
-        let recentLoads = dailyLoads.filter { $0.date >= sevenDaysAgo }
-        return recentLoads.reduce(0) { $0 + $1.totalLoad }
+        let recentSessions = gpsSessions.filter { $0.date >= sevenDaysAgo }
+        return recentSessions.reduce(0) { $0 + $1.playerLoad }
     }
 }

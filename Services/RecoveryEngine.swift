@@ -49,10 +49,10 @@ class RecoveryEngine {
             switch phase {
             case .luteal:
                 // Luteal phase: Core body temp rises, recovery can be compromised, higher perceived exertion
-                if let lastLoad = athlete.dailyLoads.last, let rpe = lastLoad.rpe, rpe > 7 {
+                if let lastLog = athlete.cycleLogs.last, lastLog.readinessScore <= 4 {
                     alerts.append(RecoveryAlert(
                         title: "Luteal Phase Load Warning",
-                        message: "Athlete is in the Luteal phase and reported high RPE (\(rpe)/10). Consider reducing high-speed distance today to aid recovery.",
+                        message: "Athlete is in the Luteal phase and reported low readiness (\(lastLog.readinessScore)/10). Consider reducing high-speed distance today to aid recovery.",
                         severity: .warning
                     ))
                 }
@@ -70,7 +70,7 @@ class RecoveryEngine {
         }
         
         // Rule 3: Sleep Drop
-        if let lastSleep = athlete.dailyLoads.last?.sleepDuration, lastSleep < 6.0 {
+        if let lastSleep = athlete.healthMetrics.last?.sleepTotalDuration, lastSleep < 6.0 {
             alerts.append(RecoveryAlert(
                 title: "Poor Sleep Recovery",
                 message: String(format: "Only %.1f hours of sleep last night. Recovery capability reduced.", lastSleep),

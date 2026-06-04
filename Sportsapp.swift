@@ -5,24 +5,32 @@ import FirebaseCore
 @main
 struct Sportsapp: App {
     @AppStorage("isAuthenticated") private var isAuthenticated = false
+    @AppStorage("loggedInRole") private var loggedInRole = ""
+    
     init() {
-            FirebaseApp.configure()
-        }
+        FirebaseApp.configure()
+    }
     
     var body: some Scene {
         WindowGroup {
             if isAuthenticated {
-                ContentView()
-                    // Provide a way to log out from the main menu if desired, or just through a button.
-                    .toolbar {
-                        ToolbarItem(placement: .cancellationAction) {
-                            Button("Log Out") {
-                                withAnimation {
-                                    isAuthenticated = false
-                                }
+                Group {
+                    if loggedInRole == "Athlete" {
+                        AthleteDashboardView()
+                    } else {
+                        StaffDashboardView()
+                    }
+                }
+                .toolbar {
+                    ToolbarItem(placement: .primaryAction) {
+                        Button("Log Out") {
+                            withAnimation {
+                                isAuthenticated = false
+                                loggedInRole = ""
                             }
                         }
                     }
+                }
             } else {
                 LoginView(isAuthenticated: $isAuthenticated)
                     .frame(minWidth: 800, minHeight: 600)

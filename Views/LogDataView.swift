@@ -86,20 +86,27 @@ struct LogDataView: View {
     private func saveData() {
         let rhr = Double(restingHR.trimmingCharacters(in: .whitespacesAndNewlines))
         
-        let newLoad = DailyLoad(
+        let newHealth = HealthMetric(
             id: UUID(),
             date: date,
-            totalDistance: 0, // Manual logs don't imply GPS distance by default
-            highSpeedDistance: 0,
-            maxSpeed: 0,
             restingHR: rhr,
-            sleepDuration: sleepDuration,
-            rpe: Int(rpe),
-            wellnessScore: Int(wellnessScore)
+            sleepTotalDuration: sleepDuration
         )
         
-        athlete.dailyLoads.append(newLoad)
-        athlete.dailyLoads.sort { $0.date < $1.date }
+        let newCycleLog = CycleLog(
+            id: UUID(),
+            date: date,
+            phase: selectedPhase,
+            symptoms: Int(10 - wellnessScore) / 2, // Map wellness to symptoms scale roughly
+            flowIntensity: 1, // default
+            readinessScore: Int(wellnessScore)
+        )
+        
+        athlete.healthMetrics.append(newHealth)
+        athlete.healthMetrics.sort { $0.date < $1.date }
+        
+        athlete.cycleLogs.append(newCycleLog)
+        athlete.cycleLogs.sort { $0.date < $1.date }
         
         if athlete.isTrackingCycle {
             athlete.currentCyclePhase = selectedPhase

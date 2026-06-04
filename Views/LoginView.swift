@@ -5,14 +5,30 @@ struct LoginView: View {
     @Binding var isAuthenticated: Bool
     @AppStorage("loggedInEmail") private var loggedInEmail = ""
     @AppStorage("loggedInName") private var loggedInName = ""
+    @AppStorage("loggedInRole") private var loggedInRole = ""
+    @AppStorage("loggedInTeamDomain") private var loggedInTeamDomain = ""
     
     @State private var email = ""
     @State private var password = ""
     @State private var firstName = ""
     @State private var lastName = ""
+    @State private var athleteTeamDomain = ""
+    @State private var selectedRole = "Staff"
     @State private var isAuthenticating = false
     @State private var isSignUp = false
     @State private var errorMessage = ""
+    
+    let roles = ["Staff", "Athlete"]
+    
+    var isSignUpValid: Bool {
+        if firstName.isEmpty || lastName.isEmpty || email.isEmpty || password.isEmpty {
+            return false
+        }
+        if selectedRole == "Athlete" && athleteTeamDomain.isEmpty {
+            return false
+        }
+        return true
+    }
     
     var body: some View {
         VStack(spacing: 30) {
@@ -45,11 +61,33 @@ struct LoginView: View {
                             .textFieldStyle(.roundedBorder)
                             .controlSize(.large)
                     }
+                    
+                    Picker("Role", selection: $selectedRole) {
+                        ForEach(roles, id: \.self) {
+                            Text($0)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                    .padding(.bottom, 4)
+                    
+                    if selectedRole == "Athlete" {
+                        TextField("Team Domain (e.g. arsenal.com)", text: $athleteTeamDomain)
+                            .textFieldStyle(.roundedBorder)
+                            .controlSize(.large)
+                            .textInputAutocapitalization(.never)
+                            .padding(.bottom, 4)
+                    } else {
+                        Text("Your team will be assigned automatically based on your email domain.")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                            .padding(.bottom, 4)
+                    }
                 }
                 
-                TextField("Work Email", text: $email)
+                TextField("Email", text: $email)
                     .textFieldStyle(.roundedBorder)
                     .controlSize(.large)
+                    .textInputAutocapitalization(.never)
                 
                 SecureField("Password", text: $password)
                     .textFieldStyle(.roundedBorder)
@@ -75,7 +113,7 @@ struct LoginView: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .controlSize(.large)
-                .disabled(email.isEmpty || password.isEmpty || isAuthenticating || (isSignUp && (firstName.isEmpty || lastName.isEmpty)))
+                .disabled(isSignUp ? !isSignUpValid : (email.isEmpty || password.isEmpty || isAuthenticating))
                 .padding(.top, 10)
                 
                 Button(action: {
@@ -121,7 +159,14 @@ struct LoginView: View {
                 
                 guard let uid = result?.user.uid else { return }
                 
-                UserManager.shared.createUserProfile(uid: uid, firstName: firstName, lastName: lastName, email: email, role: "Sports Scientist") { error in
+                let calculatedTeamDomain: String
+                if self.selectedRole == "Staff" {
+                    calculatedTeamDomain = self.email.components(separatedBy: "@").last?.lowercased() ?? ""
+                } else {
+                    calculatedTeamDomain = self.athleteTeamDomain.lowercased()
+                }
+                
+                UserManager.shared.createUserProfile(uid: uid, firstName: self.firstName, lastName: self.lastName, email: self.email, role: self.selectedRole, teamDomain: calculatedTeamDomain) { error in
                     DispatchQueue.main.async {
                         self.isAuthenticating = false
                         if let error = error {
@@ -129,6 +174,8 @@ struct LoginView: View {
                         } else {
                             self.loggedInEmail = self.email
                             self.loggedInName = "\(self.firstName) \(self.lastName)"
+                            self.loggedInRole = self.selectedRole
+                            self.loggedInTeamDomain = calculatedTeamDomain
                             withAnimation(.spring()) {
                                 self.isAuthenticated = true
                             }
@@ -153,6 +200,8 @@ struct LoginView: View {
                         case .success(let profile):
                             self.loggedInEmail = profile.email
                             self.loggedInName = profile.fullName
+                            self.loggedInRole = profile.role
+                            self.loggedInTeamDomain = profile.teamDomain
                             withAnimation(.spring()) {
                                 self.isAuthenticated = true
                             }

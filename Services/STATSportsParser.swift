@@ -23,16 +23,28 @@ class STATSportsParser {
                 if let date = dateFormatter.date(from: dateStr),
                    let athleteIndex = squad.athletes.firstIndex(where: { $0.name == name }) {
                     
-                    let newLoad = DailyLoad(
+                    let newSession = GPSSession(
                         id: UUID(),
                         date: date,
+                        duration: 90.0, // Defaulted for this simple CSV
                         totalDistance: distance,
-                        highSpeedDistance: highSpeed,
-                        maxSpeed: maxSpeed
+                        workRate: distance / 90.0,
+                        maxSpeed: maxSpeed,
+                        highSpeedRunningDistance: highSpeed,
+                        sprintDistance: highSpeed * 0.3, // Estimated
+                        playerLoad: distance * 0.1, // Estimated
+                        metabolicPower: 10.0, // Default mock
+                        highMetabolicLoadDistance: highSpeed * 1.5,
+                        accelerationsTotal: 30,
+                        accelerationsHighIntensity: 10,
+                        decelerationsTotal: 30,
+                        decelerationsHighIntensity: 10,
+                        stepBalanceAsymmetry: 0.0,
+                        impactsHighGForce: 15
                     )
                     
-                    squad.athletes[athleteIndex].dailyLoads.append(newLoad)
-                    squad.athletes[athleteIndex].dailyLoads.sort { $0.date < $1.date }
+                    squad.athletes[athleteIndex].gpsSessions.append(newSession)
+                    squad.athletes[athleteIndex].gpsSessions.sort { $0.date < $1.date }
                 }
             }
         }

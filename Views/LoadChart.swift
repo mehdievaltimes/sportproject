@@ -4,25 +4,14 @@ import Charts
 struct LoadChart: View {
     var athlete: Athlete
     
-    @State private var timeframe: Int = 28 // Default to 28 days
-    
+
     var body: some View {
-        VStack {
-            HStack {
-                Text("Historical Load")
-                    .font(.headline)
-                Spacer()
-                Picker("Timeframe", selection: $timeframe) {
-                    Text("7 Days").tag(7)
-                    Text("28 Days").tag(28)
-                    Text("60 Days").tag(60)
-                }
-                .pickerStyle(.segmented)
-                .frame(width: 250)
-            }
-            .padding(.bottom, 10)
+        VStack(alignment: .leading) {
+            Text("Historical Load")
+                .font(.headline)
+                .padding(.bottom, 10)
             
-            let data = athlete.dailyLoads.suffix(timeframe)
+            let data = athlete.gpsSessions.suffix(365)
             
             Chart {
                 // 1. Draw cycle phase background band (simplified to just show current phase on last few days for now, or extending across the window)
@@ -44,17 +33,17 @@ struct LoadChart: View {
                 }
                 
                 // 2. Draw the load bars
-                ForEach(data) { load in
+                ForEach(data) { session in
                     BarMark(
-                        x: .value("Date", load.date, unit: .day),
-                        y: .value("Load", load.totalLoad)
+                        x: .value("Date", session.date, unit: .day),
+                        y: .value("Load", session.playerLoad)
                     )
                     .foregroundStyle(Color.indigo.gradient)
                     .cornerRadius(4)
                 }
             }
             .chartScrollableAxes(.horizontal)
-            .chartXVisibleDomain(length: 3600 * 24 * min(Double(timeframe), 14)) // Always show 14 days at a time, scroll for the rest
+            .chartXVisibleDomain(length: 3600 * 24 * 60) // Show 60 days at a time, scroll for the rest
             .chartYAxis {
                 AxisMarks(position: .leading)
             }
