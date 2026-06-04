@@ -74,7 +74,6 @@ struct LoginView: View {
                         TextField("Team Domain (e.g. arsenal.com)", text: $athleteTeamDomain)
                             .textFieldStyle(.roundedBorder)
                             .controlSize(.large)
-                            .textInputAutocapitalization(.never)
                             .padding(.bottom, 4)
                     } else {
                         Text("Your team will be assigned automatically based on your email domain.")
@@ -87,7 +86,6 @@ struct LoginView: View {
                 TextField("Email", text: $email)
                     .textFieldStyle(.roundedBorder)
                     .controlSize(.large)
-                    .textInputAutocapitalization(.never)
                 
                 SecureField("Password", text: $password)
                     .textFieldStyle(.roundedBorder)

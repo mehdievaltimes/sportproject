@@ -50,6 +50,19 @@ struct StaffDashboardView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 30) {
+                    // Main Header since the window title bar is hidden
+                    HStack {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(teamDisplayName)
+                                .font(.system(size: 42, weight: .black, design: .rounded))
+                            Text("Staff Dashboard")
+                                .font(.title3)
+                                .foregroundColor(.secondary)
+                        }
+                        Spacer()
+                    }
+                    .padding(.bottom, 10)
+                    
                     ForEach(groupedAthletes, id: \.0) { position, athletes in
                         VStack(alignment: .leading, spacing: 15) {
                             Text(position)
