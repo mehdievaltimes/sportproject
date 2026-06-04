@@ -21,6 +21,19 @@ struct HistoricalMetricView: View {
         data.map { $0.value }.min() ?? 0
     }
     
+    var yAxisDomain: ClosedRange<Double> {
+        let maxVal = maxValue
+        let minVal = minValue
+        
+        if title == "Readiness Score" {
+            return 0...12
+        } else {
+            let paddedMax = maxVal == 0 ? 10.0 : maxVal * 1.15
+            let paddedMin = min(0, minVal)
+            return paddedMin...paddedMax
+        }
+    }
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             // Header Stats
@@ -75,6 +88,7 @@ struct HistoricalMetricView: View {
                 }
                 .chartScrollableAxes(.horizontal)
                 .chartXVisibleDomain(length: 3600 * 24 * 30) // Show 30 days initially
+                .chartYScale(domain: yAxisDomain)
                 .frame(height: 350)
                 .padding()
                 .background(Color(nsColor: .windowBackgroundColor))

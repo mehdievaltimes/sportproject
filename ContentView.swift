@@ -2,8 +2,7 @@ import SwiftUI
 internal import UniformTypeIdentifiers
 
 struct StaffDashboardView: View {
-    // Using @State so it can be updated by the parser
-    @State private var squad = MockData.shared.squads[0]
+    @State private var athleteManager = AthleteManager.shared
     @State private var isImporting = false
     
     @AppStorage("loggedInTeamDomain") private var loggedInTeamDomain = ""
@@ -15,7 +14,7 @@ struct StaffDashboardView: View {
     
     // Group athletes by their primary position category
     var groupedAthletes: [(String, [Athlete])] {
-        let grouped = Dictionary(grouping: squad.athletes) { athlete in
+        let grouped = Dictionary(grouping: athleteManager.roster) { athlete in
             let primary = athlete.positions.first ?? "Unspecified"
             return category(for: primary)
         }
@@ -47,6 +46,8 @@ struct StaffDashboardView: View {
     ]
     
     var body: some View {
+        @Bindable var am = athleteManager
+        
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 30) {
@@ -71,8 +72,8 @@ struct StaffDashboardView: View {
                             
                             LazyVGrid(columns: columns, spacing: 20) {
                                 ForEach(athletes) { athlete in
-                                    if let index = squad.athletes.firstIndex(where: { $0.id == athlete.id }) {
-                                        NavigationLink(destination: AthleteDetailView(athlete: $squad.athletes[index])) {
+                                    if let index = athleteManager.roster.firstIndex(where: { $0.id == athlete.id }) {
+                                        NavigationLink(destination: AthleteDetailView(athlete: $am.roster[index])) {
                                             AthleteSummaryCard(athlete: athlete)
                                         }
                                         .buttonStyle(.plain)
@@ -87,9 +88,22 @@ struct StaffDashboardView: View {
             .navigationTitle(teamDisplayName)
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
-                    Button(action: {
-                        isImporting = true
-                    }) {
+                    HStack {
+                        Button(action: {
+                            Task {
+                                for athlete in MockData.shared.squads[0].athletes {
+                                    var seededAthlete = athlete
+                                    seededAthlete.teamDomain = loggedInTeamDomain
+                                    athleteManager.saveAthlete(seededAthlete)
+                                }
+                            }
+                        }) {
+                            Label("Seed Data", systemImage: "sparkles")
+                        }
+                        
+                        Button(action: {
+                            isImporting = true
+                        }) {
                         Label("Import CSV", systemImage: "square.and.arrow.down")
                     }
                     .fileImporter(
@@ -103,7 +117,8 @@ struct StaffDashboardView: View {
                             let gotAccess = url.startAccessingSecurityScopedResource()
                             if let data = try? Data(contentsOf: url),
                                let csvString = String(data: data, encoding: .utf8) {
-                                STATSportsParser.shared.parse(csvString: csvString, squad: &squad)
+                                // STATSportsParser.shared.parse(csvString: csvString, squad: &squad)
+                                print("CSV Import not yet configured for Firestore roster")
                             }
                             if gotAccess {
                                 url.stopAccessingSecurityScopedResource()
@@ -116,6 +131,11 @@ struct StaffDashboardView: View {
             }
         }
         .frame(minWidth: 1000, minHeight: 700)
+        .onAppear {
+            if !loggedInTeamDomain.isEmpty {
+                athleteManager.fetchTeamRoster(teamDomain: loggedInTeamDomain)
+            }
+        }
     }
 }
 

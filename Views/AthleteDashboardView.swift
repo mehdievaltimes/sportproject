@@ -1,11 +1,11 @@
 import SwiftUI
+import FirebaseAuth
 
 struct AthleteDashboardView: View {
     @AppStorage("loggedInName") private var loggedInName = ""
     @State private var syncStatus = HealthDataService.SyncStatus.notStarted
     
-    // For now, we mock the logged-in athlete's data
-    @State private var athlete = MockData.shared.squads[0].athletes[0]
+    @State private var athleteManager = AthleteManager.shared
     
     var body: some View {
         Group {
@@ -24,7 +24,21 @@ struct AthleteDashboardView: View {
                             .background(Color.orange.opacity(0.1))
                         }
                         
-                        AthleteDetailView(athlete: $athlete)
+                        if athleteManager.currentAthlete != nil {
+                            AthleteDetailView(athlete: Binding(
+                                get: { athleteManager.currentAthlete! },
+                                set: { 
+                                    athleteManager.currentAthlete = $0
+                                    athleteManager.saveAthlete($0)
+                                }
+                            ))
+                        } else {
+                            VStack {
+                                Spacer()
+                                ProgressView("Loading your profile...")
+                                Spacer()
+                            }
+                        }
                     }
                     .navigationTitle("My Dashboard")
                 }
@@ -33,15 +47,13 @@ struct AthleteDashboardView: View {
                     HealthDataService.shared.requestAuthorizationAndFetch { success, error in
                         self.syncStatus = HealthDataService.shared.status
                     }
+                    if let uid = Auth.auth().currentUser?.uid {
+                        athleteManager.fetchCurrentAthlete(uid: uid)
+                    }
                 }
             } else {
                 DataConsentView()
                     .frame(minWidth: 800, minHeight: 600)
-            }
-        }
-        .onAppear {
-            if !loggedInName.isEmpty {
-                athlete.name = loggedInName
             }
         }
     }

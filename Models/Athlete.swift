@@ -1,13 +1,13 @@
 import Foundation
 
-struct Squad: Identifiable, Hashable {
-    let id: UUID
+struct Squad: Identifiable, Hashable, Codable {
+    var id: String = UUID().uuidString
     var name: String
     var athletes: [Athlete]
 }
 
-struct AthleteNote: Identifiable, Hashable {
-    let id: UUID
+struct AthleteNote: Identifiable, Hashable, Codable {
+    var id: String = UUID().uuidString
     let date: Date
     let author: String
     var content: String
@@ -20,16 +20,18 @@ enum AthleteStatus: String, Codable, Hashable, CaseIterable {
     case injured = "Injured"
 }
 
-struct InjuryEvent: Identifiable, Hashable {
-    let id: UUID
+struct InjuryEvent: Identifiable, Hashable, Codable {
+    var id: String = UUID().uuidString
     let date: Date
     let bodyPart: String
     var expectedReturnDate: Date?
     var clearanceStatus: String?
 }
 
-struct Athlete: Identifiable, Hashable {
-    let id: UUID
+struct Athlete: Identifiable, Hashable, Codable {
+    var id: String // Mapped to Firebase Auth UID
+    var teamDomain: String
+    
     var name: String
     var positions: [String]
     var isTrackingCycle: Bool
@@ -44,7 +46,7 @@ struct Athlete: Identifiable, Hashable {
     var healthMetrics: [HealthMetric] = []
     var cycleLogs: [CycleLog] = []
     
-    var notes: [AthleteNote]
+    var notes: [AthleteNote] = []
     
     // Medical Tracking
     var status: AthleteStatus = .available

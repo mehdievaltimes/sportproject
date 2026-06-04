@@ -59,12 +59,44 @@ class UserManager {
         
         do {
             try db.collection("users").document(uid).setData(from: profile) { error in
-                if error == nil {
+                if let error = error {
+                    completion(error)
+                    return
+                }
+                
+                if role == "Athlete" {
+                    let newAthlete = Athlete(
+                        id: uid,
+                        teamDomain: teamDomain,
+                        name: "\(firstName) \(lastName)",
+                        positions: [],
+                        isTrackingCycle: false,
+                        currentCyclePhase: nil,
+                        height: nil,
+                        weight: nil,
+                        gpsSessions: [],
+                        healthMetrics: [],
+                        cycleLogs: [],
+                        notes: [],
+                        status: .available,
+                        injuries: []
+                    )
+                    do {
+                        try self.db.collection("athletes").document(uid).setData(from: newAthlete) { athleteError in
+                            DispatchQueue.main.async {
+                                self.currentUserProfile = profile
+                            }
+                            completion(athleteError)
+                        }
+                    } catch {
+                        completion(error)
+                    }
+                } else {
                     DispatchQueue.main.async {
                         self.currentUserProfile = profile
                     }
+                    completion(nil)
                 }
-                completion(error)
             }
         } catch {
             completion(error)
