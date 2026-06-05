@@ -96,6 +96,9 @@ struct StaffDashboardView: View {
                                 ForEach(medicalBayAthletes) { athlete in
                                     if let index = athleteManager.roster.firstIndex(where: { $0.id == athlete.id }) {
                                         MedicalAthleteCard(athlete: $am.roster[index])
+                                            .contextMenu {
+                                                positionMenu(for: athlete.id)
+                                            }
                                     }
                                 }
                             }
@@ -119,6 +122,9 @@ struct StaffDashboardView: View {
                                             AthleteSummaryCard(athlete: athlete)
                                         }
                                         .buttonStyle(.plain)
+                                        .contextMenu {
+                                            positionMenu(for: athlete.id)
+                                        }
                                     }
                                 }
                             }
@@ -158,7 +164,7 @@ struct StaffDashboardView: View {
                                 guard let url = urls.first else { return }
                                 let gotAccess = url.startAccessingSecurityScopedResource()
                                 if let data = try? Data(contentsOf: url),
-                                   let csvString = String(data: data, encoding: .utf8) {
+                                   let _ = String(data: data, encoding: .utf8) {
                                     // STATSportsParser.shared.parse(csvString: csvString, squad: &squad)
                                     print("CSV Import not yet configured for Firestore roster")
                                 }
@@ -312,6 +318,30 @@ struct StaffDashboardView: View {
             .sheet(isPresented: $isUpdatingStatus) {
                 UpdateStatusView(athlete: $athlete)
             }
+        }
+    }
+    
+    @ViewBuilder
+    private func positionMenu(for athleteId: String) -> some View {
+        Menu("Assign Position") {
+            Button("Goalkeeper") { assignPosition(to: athleteId, position: "Goalkeeper") }
+            Button("Defender") { assignPosition(to: athleteId, position: "Defender") }
+            Button("Midfielder") { assignPosition(to: athleteId, position: "Midfielder") }
+            Button("Attacker") { assignPosition(to: athleteId, position: "Attacker") }
+            Divider()
+            Button("Clear (Unspecified)", role: .destructive) { assignPosition(to: athleteId, position: nil) }
+        }
+    }
+    
+    private func assignPosition(to athleteId: String, position: String?) {
+        if let index = athleteManager.roster.firstIndex(where: { $0.id == athleteId }) {
+            var athlete = athleteManager.roster[index]
+            if let pos = position {
+                athlete.positions = [pos]
+            } else {
+                athlete.positions = []
+            }
+            athleteManager.saveAthlete(athlete)
         }
     }
 }

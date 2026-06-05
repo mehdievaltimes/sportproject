@@ -6,7 +6,6 @@ struct UpdateStatusView: View {
     
     @State private var selectedStatus: AthleteStatus
     @State private var positionsString: String
-    @State private var name: String
     @State private var heightString: String
     @State private var weightString: String
     @State private var bodyPart: String = ""
@@ -17,7 +16,6 @@ struct UpdateStatusView: View {
         self._athlete = athlete
         self._selectedStatus = State(initialValue: athlete.wrappedValue.status)
         self._positionsString = State(initialValue: athlete.wrappedValue.positions.joined(separator: ", "))
-        self._name = State(initialValue: athlete.wrappedValue.name)
         
         if let h = athlete.wrappedValue.height {
             self._heightString = State(initialValue: String(format: "%.1f", h))
@@ -36,7 +34,6 @@ struct UpdateStatusView: View {
         NavigationStack {
             Form {
                 Section(header: Text("Profile Settings")) {
-                    TextField("Full Name", text: $name)
                     TextField("Positions (comma-separated)", text: $positionsString)
                     HStack {
                         TextField("Height (cm)", text: $heightString)
@@ -79,7 +76,6 @@ struct UpdateStatusView: View {
     
     private func saveStatus() {
         athlete.status = selectedStatus
-        athlete.name = name.trimmingCharacters(in: .whitespacesAndNewlines)
         athlete.positions = positionsString.components(separatedBy: ",").map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }.filter { !$0.isEmpty }
         athlete.height = Double(heightString)
         athlete.weight = Double(weightString)
