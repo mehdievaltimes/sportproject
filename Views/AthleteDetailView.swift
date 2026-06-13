@@ -49,6 +49,13 @@ struct AthleteDetailView: View {
                                     .foregroundColor(.secondary)
                             }
                             .buttonStyle(.plain)
+                            
+                            Button(action: { dropAthlete() }) {
+                                Image(systemName: "person.fill.xmark")
+                                    .foregroundColor(.red)
+                            }
+                            .buttonStyle(.plain)
+                            .help("Drop athlete from team")
                         }
                     }
                     Spacer()
@@ -355,6 +362,12 @@ struct AthleteDetailView: View {
     }
     
     // MARK: - Actions
+    
+    private func dropAthlete() {
+        var updatedAthlete = athlete
+        updatedAthlete.teamDomain = "unknown"
+        AthleteManager.shared.saveAthlete(updatedAthlete)
+    }
     
     private func setChart(_ category: String, _ title: String, _ unit: String, _ color: Color, _ data: [MetricDataPoint]) {
         withAnimation {
