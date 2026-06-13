@@ -12,19 +12,12 @@ struct LoginView: View {
     @State private var password = ""
     @State private var firstName = ""
     @State private var lastName = ""
-    @State private var athleteTeamDomain = ""
-    @State private var selectedRole = "Staff"
     @State private var isAuthenticating = false
     @State private var isSignUp = false
     @State private var errorMessage = ""
     
-    let roles = ["Staff", "Athlete"]
-    
     var isSignUpValid: Bool {
         if firstName.isEmpty || lastName.isEmpty || email.isEmpty || password.isEmpty {
-            return false
-        }
-        if selectedRole == "Athlete" && athleteTeamDomain.isEmpty {
             return false
         }
         return true
@@ -62,25 +55,10 @@ struct LoginView: View {
                             .controlSize(.large)
                     }
                     
-                    Picker("Role", selection: $selectedRole) {
-                        ForEach(roles, id: \.self) {
-                            Text($0)
-                        }
-                    }
-                    .pickerStyle(.segmented)
-                    .padding(.bottom, 4)
-                    
-                    if selectedRole == "Athlete" {
-                        TextField("Team Domain (e.g. arsenal.com)", text: $athleteTeamDomain)
-                            .textFieldStyle(.roundedBorder)
-                            .controlSize(.large)
-                            .padding(.bottom, 4)
-                    } else {
-                        Text("Your team will be assigned automatically based on your email domain.")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                            .padding(.bottom, 4)
-                    }
+                    Text("Your team will be assigned automatically based on your email domain.")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                        .padding(.bottom, 4)
                 }
                 
                 TextField("Email", text: $email)
@@ -157,14 +135,9 @@ struct LoginView: View {
                 
                 guard let uid = result?.user.uid else { return }
                 
-                let calculatedTeamDomain: String
-                if self.selectedRole == "Staff" {
-                    calculatedTeamDomain = self.email.components(separatedBy: "@").last?.lowercased() ?? ""
-                } else {
-                    calculatedTeamDomain = self.athleteTeamDomain.lowercased()
-                }
+                let calculatedTeamDomain = self.email.components(separatedBy: "@").last?.lowercased() ?? ""
                 
-                UserManager.shared.createUserProfile(uid: uid, firstName: self.firstName, lastName: self.lastName, email: self.email, role: self.selectedRole, teamDomain: calculatedTeamDomain) { error in
+                UserManager.shared.createUserProfile(uid: uid, firstName: self.firstName, lastName: self.lastName, email: self.email, role: "Staff", teamDomain: calculatedTeamDomain) { error in
                     DispatchQueue.main.async {
                         self.isAuthenticating = false
                         if let error = error {
@@ -196,12 +169,17 @@ struct LoginView: View {
                         self.isAuthenticating = false
                         switch fetchResult {
                         case .success(let profile):
-                            self.loggedInEmail = profile.email
-                            self.loggedInName = profile.fullName
-                            self.loggedInRole = profile.role
-                            self.loggedInTeamDomain = profile.teamDomain
-                            withAnimation(.spring()) {
-                                self.isAuthenticated = true
+                            if profile.role == "Athlete" {
+                                try? Auth.auth().signOut()
+                                self.errorMessage = "Access Denied: This macOS app is restricted to coaching staff only."
+                            } else {
+                                self.loggedInEmail = profile.email
+                                self.loggedInName = profile.fullName
+                                self.loggedInRole = profile.role
+                                self.loggedInTeamDomain = profile.teamDomain
+                                withAnimation(.spring()) {
+                                    self.isAuthenticated = true
+                                }
                             }
                         case .failure(let error):
                             self.errorMessage = "Failed to load profile: \(error.localizedDescription)"
