@@ -41,6 +41,7 @@
 		91B2E1372FC8086B00A8E199 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B2E11B2FC8086B00A8E199 /* ContentView.swift */; };
 		91B2E1382FC8086B00A8E199 /* Athlete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B2E11C2FC8086B00A8E199 /* Athlete.swift */; };
 		91F5513B2FCF8EF000D0CA7B /* AthleteDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F5513A2FCF8EF000D0CA7B /* AthleteDashboardView.swift */; };
+		91FB0FF62FDD1F6C00A2C21E /* TeamInvite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91FB0FF52FDD1F6C00A2C21E /* TeamInvite.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -71,6 +72,7 @@
 		91B2E1292FC8086B00A8E199 /* LogDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDataView.swift; sourceTree = "<group>"; };
 		91B2E12A2FC8086B00A8E199 /* NotesSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesSection.swift; sourceTree = "<group>"; };
 		91F5513A2FCF8EF000D0CA7B /* AthleteDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AthleteDashboardView.swift; sourceTree = "<group>"; };
+		91FB0FF52FDD1F6C00A2C21E /* TeamInvite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamInvite.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,7 @@
 			children = (
 				91B2E11C2FC8086B00A8E199 /* Athlete.swift */,
 				91B2E11D2FC8086B00A8E199 /* DailyLoad.swift */,
+				91FB0FF52FDD1F6C00A2C21E /* TeamInvite.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -254,6 +257,7 @@
 				911EED4C2FD20E8B0038348A /* CapacityGaugeView.swift in Sources */,
 				9109EA742FC821BD00A15E0C /* UserManager.swift in Sources */,
 				91B2E1322FC8086B00A8E199 /* AthleteDetailView.swift in Sources */,
+				91FB0FF62FDD1F6C00A2C21E /* TeamInvite.swift in Sources */,
 				91B2E1332FC8086B00A8E199 /* LoadChart.swift in Sources */,
 				911EED4A2FD159F90038348A /* HistoricalMetricView.swift in Sources */,
 				9109EA5B2FC80F2900A15E0C /* LoginView.swift in Sources */,
