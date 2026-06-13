@@ -1,65 +1,96 @@
 import SwiftUI
+import FirebaseFirestore
 
 struct AddAthleteView: View {
     @Environment(\.dismiss) var dismiss
     @AppStorage("loggedInTeamDomain") private var loggedInTeamDomain = ""
-    @State private var athleteManager = AthleteManager.shared
     
-    @State private var name: String = ""
-    @State private var position: String = ""
-    @State private var heightString: String = ""
-    @State private var weightString: String = ""
-    @State private var isTrackingCycle: Bool = false
+    @State private var email: String = ""
+    @State private var isInviting = false
+    @State private var errorMessage = ""
+    @State private var successMessage = ""
     
     var body: some View {
         NavigationStack {
             Form {
-                Section(header: Text("Personal Details")) {
-                    TextField("Name", text: $name)
-                    TextField("Positions (comma-separated)", text: $position)
-                    TextField("Height (cm)", text: $heightString)
-                    TextField("Weight (kg)", text: $weightString)
+                Section(header: Text("Invite Athlete"), footer: Text("The athlete must already have an account created in the iOS app.")) {
+                    TextField("Athlete's Email Address", text: $email)
                 }
                 
-                Section(header: Text("Health Settings")) {
-                    Toggle("Tracking Menstrual Cycle", isOn: $isTrackingCycle)
+                if !errorMessage.isEmpty {
+                    Text(errorMessage).foregroundColor(.red).font(.caption)
+                }
+                if !successMessage.isEmpty {
+                    Text(successMessage).foregroundColor(.green).font(.caption)
                 }
             }
             .padding()
-            .frame(width: 400, height: 250)
-            .navigationTitle("Add New Athlete")
+            .frame(width: 400, height: 200)
+            .navigationTitle("Invite Athlete")
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") { dismiss() }
+                    Button("Close") { dismiss() }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Save") {
-                        saveAthlete()
+                    if isInviting {
+                        ProgressView().controlSize(.small)
+                    } else {
+                        Button("Send Invite") {
+                            sendInvite()
+                        }
+                        .disabled(email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                     }
-                    .disabled(name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                 }
             }
         }
     }
     
-    private func saveAthlete() {
-        let newAthlete = Athlete(
-            id: UUID().uuidString,
-            teamDomain: loggedInTeamDomain,
-            name: name.trimmingCharacters(in: .whitespacesAndNewlines),
-            positions: position.components(separatedBy: ",").map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }.filter { !$0.isEmpty },
-            isTrackingCycle: isTrackingCycle,
-            currentCyclePhase: isTrackingCycle ? .follicular : nil, // Default starting phase
-            height: Double(heightString),
-            weight: Double(weightString),
-            gpsSessions: [],
-            healthMetrics: [],
-            cycleLogs: [],
-            notes: [],
-            status: .available,
-            injuries: []
-        )
-        athleteManager.saveAthlete(newAthlete)
-        dismiss()
+    private func sendInvite() {
+        isInviting = true
+        errorMessage = ""
+        successMessage = ""
+        
+        let targetEmail = email.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        let db = Firestore.firestore()
+        
+        // Find the user by email
+        db.collection("users").whereField("email", isEqualTo: targetEmail).getDocuments { snapshot, error in
+            if let error = error {
+                self.errorMessage = "Error searching for user: \(error.localizedDescription)"
+                self.isInviting = false
+                return
+            }
+            
+            guard let documents = snapshot?.documents, let userDoc = documents.first else {
+                self.errorMessage = "No athlete found with that email address."
+                self.isInviting = false
+                return
+            }
+            
+            let uid = userDoc.documentID
+            
+            let invite = TeamInvite(
+                athleteId: uid,
+                athleteEmail: targetEmail,
+                teamDomain: loggedInTeamDomain,
+                status: .pending,
+                timestamp: Date()
+            )
+            
+            do {
+                try db.collection("team_invites").document(invite.id).setData(from: invite)
+                self.successMessage = "Invite sent successfully!"
+                self.email = ""
+                
+                // Dismiss after a short delay so they see the success message
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                    self.dismiss()
+                }
+            } catch {
+                self.errorMessage = "Error sending invite: \(error.localizedDescription)"
+            }
+            
+            self.isInviting = false
+        }
     }
 }
