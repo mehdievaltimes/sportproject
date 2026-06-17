@@ -145,7 +145,7 @@ struct LoginView: View {
                         } else {
                             self.loggedInEmail = self.email
                             self.loggedInName = "\(self.firstName) \(self.lastName)"
-                            self.loggedInRole = self.selectedRole
+//                            self.loggedInRole = self.selectedRole
                             self.loggedInTeamDomain = calculatedTeamDomain
                             withAnimation(.spring()) {
                                 self.isAuthenticated = true

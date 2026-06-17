@@ -67,6 +67,13 @@ struct AddAthleteView: View {
                 return
             }
             
+            let currentTeam = userDoc.data()["teamDomain"] as? String ?? "unknown"
+            if currentTeam != "unknown" && !currentTeam.isEmpty {
+                self.errorMessage = "This athlete already belongs to a team."
+                self.isInviting = false
+                return
+            }
+            
             let uid = userDoc.documentID
             
             let invite = TeamInvite(

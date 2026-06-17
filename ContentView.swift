@@ -4,6 +4,7 @@ internal import UniformTypeIdentifiers
 struct StaffDashboardView: View {
     @State private var athleteManager = AthleteManager.shared
     @State private var isImporting = false
+    @State private var isInviting = false
     
     @AppStorage("loggedInTeamDomain") private var loggedInTeamDomain = ""
     
@@ -138,11 +139,30 @@ struct StaffDashboardView: View {
                 ToolbarItem(placement: .primaryAction) {
                     HStack {
                         Button(action: {
+                            isInviting = true
+                        }) {
+                            Label("Invite Athlete", systemImage: "person.badge.plus")
+                        }
+                        .sheet(isPresented: $isInviting) {
+                            AddAthleteView()
+                        }
+                        
+                        Button(action: {
                             Task {
                                 for athlete in MockData.shared.squads[0].athletes {
                                     var seededAthlete = athlete
                                     seededAthlete.teamDomain = loggedInTeamDomain
                                     athleteManager.saveAthlete(seededAthlete)
+                                    
+                                    for session in athlete.gpsSessions {
+                                        athleteManager.saveGPSSession(session, uid: athlete.id)
+                                    }
+                                    for metric in athlete.healthMetrics {
+                                        athleteManager.saveHealthMetric(metric, uid: athlete.id)
+                                    }
+                                    for log in athlete.cycleLogs {
+                                        athleteManager.saveCycleLog(log, uid: athlete.id)
+                                    }
                                 }
                             }
                         }) {

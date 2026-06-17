@@ -58,4 +58,9 @@ struct Athlete: Identifiable, Hashable, Codable {
         let recentSessions = gpsSessions.filter { $0.date >= sevenDaysAgo }
         return recentSessions.reduce(0) { $0 + $1.playerLoad }
     }
+    
+    enum CodingKeys: String, CodingKey {
+        case id, teamDomain, name, positions, isTrackingCycle, currentCyclePhase
+        case height, weight, notes, status, injuries
+    }
 }
